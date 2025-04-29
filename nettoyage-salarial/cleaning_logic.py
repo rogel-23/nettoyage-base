@@ -20,7 +20,7 @@ from constants import (
     segmentation_columns, job_title_columns, job_columns, nplus1_columns, convention_columns, base_salary_columns,
     coefficient_columns, idcc_columns
 )
-from utils_erreurs import log_error, generate_word_report
+# from utils_erreurs import log_error, generate_word_report
 
 
 # Rapport Word
