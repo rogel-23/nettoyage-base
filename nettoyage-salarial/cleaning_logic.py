@@ -141,7 +141,7 @@ def normalize_job_title(title):
     title = re.sub(r"\s+", " ", title.strip())
     return title
 
-def suggest_job_title_mapping(series, threshold=0.85):
+'''def suggest_job_title_mapping(series, threshold=0.85):
     cleaned_series = series.fillna("").apply(normalize_job_title)
     unique_titles = cleaned_series.unique().tolist()
 
@@ -168,7 +168,7 @@ def suggest_job_title_mapping(series, threshold=0.85):
     mapping_df["Harmonisation finale"] = mapping_df["Suggestion"]
     initial_mapping = dict(zip(mapping_df["Original"], mapping_df["Suggestion"]))
 
-    return mapping_df, initial_mapping
+    return mapping_df, initial_mapping'''
 
 def harmonize_financial_values(df, col, empty_check=True):
     original = df[col].copy()
@@ -197,7 +197,7 @@ def harmonize_financial_values(df, col, empty_check=True):
     return df, errors, modified
 
 
-def get_similar_job_title_groups(series, threshold=0.85):
+'''def get_similar_job_title_groups(series, threshold=0.85):
     series = series.fillna("").apply(normalize_job_title)
     unique_titles = series.unique().tolist()
     embeddings = model.encode(unique_titles, convert_to_tensor=True)
@@ -218,7 +218,7 @@ def get_similar_job_title_groups(series, threshold=0.85):
             groups.append(group)
             used.update(group)
 
-    return series, groups
+    return series, groups'''
 
 
 def save_cleaned_excel(df, modified_cells, columns_to_check_dupes, incoherent_entry_dates, column_menus, smic_threshold):
