@@ -18,7 +18,7 @@ from constants import (
 )
 from cleaning_logic import (
     generate_word_report, is_valid_postal, harmonize_text, harmonize_if_known, is_invalid_contract, clean_workload, 
-    is_invalid_workload, extract_hour, suggest_job_title_mapping, normalize_job_title, get_similar_job_title_groups,
+    is_invalid_workload, extract_hour, normalize_job_title,
     save_cleaned_excel, apply_fusions, harmonize_financial_values
 )
 
