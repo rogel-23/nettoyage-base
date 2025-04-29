@@ -20,17 +20,24 @@ from constants import (
     segmentation_columns, job_title_columns, job_columns, nplus1_columns, convention_columns, base_salary_columns,
     coefficient_columns, idcc_columns
 )
+import tempfile
+import uuid
 
 
 # Rapport Word
-def generate_word_report(report_type, content):
+def generate_word_report(title, items):
     doc = Document()
-    doc.add_heading(f"Rapport {report_type}", level=1)
-    for item in content:
-        doc.add_paragraph(item)
-    filename = f"rapport_{report_type.lower().replace(' ', '_')}.docx"
-    doc.save(filename)
-    return filename
+    doc.add_heading(title, 0)
+    for item in items:
+        doc.add_paragraph(str(item))
+
+    # Générer un fichier temporaire UNIQUE
+    temp_dir = tempfile.gettempdir()
+    temp_filename = f"report_{uuid.uuid4().hex}.docx"
+    temp_path = f"{temp_dir}/{temp_filename}"
+
+    doc.save(temp_path)
+    return temp_path
 
 def is_valid_postal(val, empty_check=True):
     if pd.isna(val) or str(val).strip() == "":
