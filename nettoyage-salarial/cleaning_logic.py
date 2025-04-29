@@ -5,9 +5,9 @@ import unidecode
 import re
 import streamlit as st
 from sklearn.neighbors import NearestNeighbors
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 import unidecode
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import openpyxl
 from openpyxl.styles import PatternFill
@@ -130,7 +130,7 @@ def extract_hour(val):
         return "Non reconnu"
     
 # Initialisation du modèle
-model = SentenceTransformer("sentence-transformers/paraphrase-xlm-r-multilingual-v1")
+# model = SentenceTransformer("sentence-transformers/paraphrase-xlm-r-multilingual-v1")
 
 def normalize_job_title(title):
     if pd.isna(title):
