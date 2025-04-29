@@ -8,7 +8,7 @@ from sklearn.neighbors import NearestNeighbors
 # from sentence_transformers import SentenceTransformer
 import unidecode
 # from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.metrics.pairwise import cosine_similarity
 import openpyxl
 from openpyxl.styles import PatternFill
 from datetime import datetime
