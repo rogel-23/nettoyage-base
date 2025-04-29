@@ -4,3 +4,5 @@ numpy
 openpyxl
 python-docx
 unidecode
+scikit-learn
+sentence-transformers
