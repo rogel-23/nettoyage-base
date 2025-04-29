@@ -5,9 +5,9 @@ import unidecode
 import re
 import streamlit as st
 from sklearn.neighbors import NearestNeighbors
-# from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer
 import unidecode
-# from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import openpyxl
 from openpyxl.styles import PatternFill
@@ -20,24 +20,18 @@ from constants import (
     segmentation_columns, job_title_columns, job_columns, nplus1_columns, convention_columns, base_salary_columns,
     coefficient_columns, idcc_columns
 )
-import tempfile
-import uuid
+from utils_erreurs import log_error, generate_word_report
 
 
 # Rapport Word
-def generate_word_report(title, items):
+def generate_word_report(report_type, content):
     doc = Document()
-    doc.add_heading(title, 0)
-    for item in items:
-        doc.add_paragraph(str(item))
-
-    # Générer un fichier temporaire UNIQUE
-    temp_dir = tempfile.gettempdir()
-    temp_filename = f"report_{uuid.uuid4().hex}.docx"
-    temp_path = f"{temp_dir}/{temp_filename}"
-
-    doc.save(temp_path)
-    return temp_path
+    doc.add_heading(f"Rapport {report_type}", level=1)
+    for item in content:
+        doc.add_paragraph(item)
+    filename = f"rapport_{report_type.lower().replace(' ', '_')}.docx"
+    doc.save(filename)
+    return filename
 
 def is_valid_postal(val, empty_check=True):
     if pd.isna(val) or str(val).strip() == "":
@@ -130,7 +124,7 @@ def extract_hour(val):
         return "Non reconnu"
     
 # Initialisation du modèle
-# model = SentenceTransformer("sentence-transformers/paraphrase-xlm-r-multilingual-v1")
+model = SentenceTransformer("sentence-transformers/paraphrase-xlm-r-multilingual-v1")
 
 def normalize_job_title(title):
     if pd.isna(title):
@@ -141,7 +135,7 @@ def normalize_job_title(title):
     title = re.sub(r"\s+", " ", title.strip())
     return title
 
-'''def suggest_job_title_mapping(series, threshold=0.85):
+def suggest_job_title_mapping(series, threshold=0.85):
     cleaned_series = series.fillna("").apply(normalize_job_title)
     unique_titles = cleaned_series.unique().tolist()
 
@@ -168,7 +162,7 @@ def normalize_job_title(title):
     mapping_df["Harmonisation finale"] = mapping_df["Suggestion"]
     initial_mapping = dict(zip(mapping_df["Original"], mapping_df["Suggestion"]))
 
-    return mapping_df, initial_mapping'''
+    return mapping_df, initial_mapping
 
 def harmonize_financial_values(df, col, empty_check=True):
     original = df[col].copy()
@@ -197,7 +191,7 @@ def harmonize_financial_values(df, col, empty_check=True):
     return df, errors, modified
 
 
-'''def get_similar_job_title_groups(series, threshold=0.85):
+def get_similar_job_title_groups(series, threshold=0.85):
     series = series.fillna("").apply(normalize_job_title)
     unique_titles = series.unique().tolist()
     embeddings = model.encode(unique_titles, convert_to_tensor=True)
@@ -218,7 +212,7 @@ def harmonize_financial_values(df, col, empty_check=True):
             groups.append(group)
             used.update(group)
 
-    return series, groups'''
+    return series, groups
 
 
 def save_cleaned_excel(df, modified_cells, columns_to_check_dupes, incoherent_entry_dates, column_menus, smic_threshold):
